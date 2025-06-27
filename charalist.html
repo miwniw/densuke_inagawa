@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>登場人物紹介 | とあるコメディ小説</title>
+    <!-- Tailwind CSSの読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fontsの読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSSをHTML内に直接埋め込み -->
+    <style>
+      body {
+        /* ページ全体に丸みのあるフォントを適用 */
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+      }
+
+      /* 選択リストのアイテムにマウスカーソルを合わせたときにポインターにする */
+      .character-item {
+        cursor: pointer;
+      }
+
+      /* メインキャラクター表示エリアのトランジション */
+      #main-character {
+        transition: opacity 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-200">
+    <!-- ▼ここからグローバルメニュー▼ -->
+    <nav class="bg-gray-800/90 backdrop-blur-sm sticky top-0 z-50">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex-shrink-0">
+            <!-- 左寄せ: タイトル -->
+            <a
+              href="./index.html"
+              class="text-white text-xl font-bold hover:text-sky-400 transition-colors"
+              >タイトル</a
+            >
+          </div>
+          <div class="hidden md:block">
+            <!-- 右寄せ: PC用ナビゲーションメニュー -->
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a
+                href="./sample.html"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Menu1</a
+              >
+              <a
+                href="./sample.html"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Menu2</a
+              >
+              <a
+                href="./sample.html"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Menu3</a
+              >
+              <a
+                href="./sample.html"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Contact</a
+              >
+            </div>
+          </div>
+          <!-- ハンバーガーメニューボタン (768px以下で表示) -->
+          <div class="-mr-2 flex md:hidden">
+            <button
+              id="hamburger-button"
+              type="button"
+              class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">メインメニューを開く</span>
+              <!-- ハンバーガーアイコン (閉) -->
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <!-- ハンバーガーアイコン (開) -->
+              <svg
+                class="hidden h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SP用ナビゲーションメニュー (開閉) -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a
+            href="./sample.html"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >Menu1</a
+          >
+          <a
+            href="./sample.html"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >Menu2</a
+          >
+          <a
+            href="./sample.html"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >Menu3</a
+          >
+          <a
+            href="./sample.html"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+    <!-- ▲ここまでグローバルメニュー▲ -->
+
+    <div class="container mx-auto p-4 md:p-8">
+      <header class="text-center my-8 md:my-12">
+        <h1 class="text-3xl md:text-5xl font-bold text-white">登場人物紹介</h1>
+        <p class="text-gray-400 mt-2">
+          とあるコメディ小説の個性豊かなキャラクターたち
+        </p>
+      </header>
+
+      <!-- メインのキャラクター表示エリア -->
+      <main
+        id="main-character"
+        class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6 md:gap-8 mb-8 md:mb-12 transition-opacity duration-500 ease-in-out"
+      >
+        <!-- キャラクター画像 -->
+        <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0">
+          <img
+            id="char-image"
+            src="./imgs/sample.png"
+            alt="キャラクター画像"
+            class="w-full h-full object-cover rounded-full border-4 border-gray-600"
+          />
+        </div>
+        <!-- キャラクター情報 -->
+        <div class="text-center md:text-left">
+          <h2
+            id="char-name"
+            class="text-2xl md:text-4xl font-bold text-sky-400"
+          >
+            キャラクター名
+          </h2>
+          <p
+            id="char-catchphrase"
+            class="text-lg md:text-xl text-gray-300 font-medium my-2"
+          >
+            決め台詞やキャッチフレーズ
+          </p>
+          <p id="char-description" class="text-gray-400 leading-relaxed">
+            ここにキャラクターの詳細な説明文が入ります。性格、背景、物語での役割などを記述します。
+          </p>
+        </div>
+      </main>
+
+      <!-- キャラクター選択リスト -->
+      <nav>
+        <h3
+          class="text-xl md:text-2xl font-bold text-center mb-6 text-gray-100"
+        >
+          キャラクターを選択
+        </h3>
+        <ul
+          id="character-list"
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 justify-center"
+        >
+          <!-- JavaScriptによってキャラクターリストがここに生成されます -->
+        </ul>
+      </nav>
+    </div>
+
+    <!-- JavaScriptをHTML内に直接埋め込み -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- ▼ ハンバーガーメニューの制御 ▼ ---
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (hamburgerButton && mobileMenu) {
+          const openIcon = hamburgerButton.querySelector('svg:first-of-type');
+          const closeIcon = hamburgerButton.querySelector('svg:last-of-type');
+
+          hamburgerButton.addEventListener('click', () => {
+            const isExpanded =
+              hamburgerButton.getAttribute('aria-expanded') === 'true';
+            hamburgerButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+          });
+        }
+        // --- ▲ ハンバーガーメニューの制御 ▲ ---
+
+        // キャラクターのデータ配列
+        const characters = [
+          {
+            id: 1,
+            name: '猪名川 伝助 (いながわ でんすけ)',
+            catchphrase: '愛すべきダメ弁護士',
+            description:
+              '美女とグルメに目がない男の原動力。それはズバリ、卑猥な下心とピンク色の妄想。大阪で生まれ育った彼の母語は、もちろん関西弁だ。',
+            image: './imgs/densuke.png',
+          },
+          {
+            id: 2,
+            name: '佐々木 真琴 (ささき まこと)',
+            catchphrase: '心優しきパラリーガル',
+            description:
+              '光輝の幼馴染で、いつも突拍子もない行動で周囲を混乱させる。自称・天才発明家だが、作るものはガラクタばかり。でも、たまに奇跡を起こす。',
+            image: './imgs/sample.png',
+          },
+          {
+            id: 3,
+            name: '成瀬 誠 (なるせ まこと)',
+            catchphrase: '俺様系ナルシスト探偵',
+            description:
+              'お金持ちで眉目秀麗、学園の生徒会長。しかし、極度のナルシストで自分の美しさに酔いしれている。光輝を一方的にライバル視している。',
+            image: './imgs/sample.png',
+          },
+          {
+            id: 4,
+            name: '石倉 忠助 (いしくら ちゅうすけ)',
+            catchphrase: '義理人情に生きる料理人',
+            description:
+              'いつも眠そうにしている物静かな後輩。日当たりの良い場所を見つけては昼寝をしている。実はものすごい情報通で、学園の裏事情に詳しい。',
+            image: './imgs/sample.png',
+          },
+          {
+            id: 5,
+            name: '猪名川 作蔵 (いながわ さくぞう)',
+            catchphrase: '弱者に寄り添った社会派弁護士',
+            description:
+              '伝助の父。光輝のクラスメイトで、何事も筋力で解決しようとする。細かいことは気にしない性格。',
+            image: './imgs/sample.png',
+          },
+        ];
+
+        // DOM要素の取得
+        const mainCharacter = document.getElementById('main-character');
+        const charImage = document.getElementById('char-image');
+        const charName = document.getElementById('char-name');
+        const charCatchphrase = document.getElementById('char-catchphrase');
+        const charDescription = document.getElementById('char-description');
+        const characterList = document.getElementById('character-list');
+
+        // メインのキャラクター表示を更新する関数
+        const updateMainCharacter = (character) => {
+          // フェードアウト
+          mainCharacter.style.opacity = 0;
+
+          setTimeout(() => {
+            charImage.src = character.image;
+            charImage.alt = character.name;
+            charName.textContent = character.name;
+            charCatchphrase.textContent = character.catchphrase;
+            charDescription.textContent = character.description;
+            // フェードイン
+            mainCharacter.style.opacity = 1;
+          }, 300); // 0.3秒後に内容を更新してフェードイン
+        };
+
+        // キャラクター選択リストを生成する関数
+        const createCharacterList = () => {
+          characters.forEach((character) => {
+            const li = document.createElement('li');
+            li.className = 'character-item'; // CSSでカーソルをポインターにするため
+
+            const button = document.createElement('button');
+            button.className =
+              'w-full h-full text-center group transform transition-transform duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg';
+            button.dataset.characterId = character.id;
+
+            const img = document.createElement('img');
+            img.src = character.image;
+            img.alt = character.name;
+            img.className =
+              'w-24 h-24 md:w-32 md:h-32 object-cover rounded-full mx-auto border-4 border-gray-700 shadow-md transition-all duration-300 group-hover:border-sky-500';
+
+            const p = document.createElement('p');
+            // ★修正点: 氏名を漢字部分のみに変更
+            p.textContent = character.name.split(' (')[0];
+            p.className =
+              'mt-2 font-bold text-gray-300 group-hover:text-sky-400 text-sm';
+
+            button.appendChild(img);
+            button.appendChild(p);
+            li.appendChild(button);
+            characterList.appendChild(li);
+
+            // クリックイベントの追加
+            button.addEventListener('click', () => {
+              const selectedCharacter = characters.find(
+                (c) => c.id == button.dataset.characterId
+              );
+              if (selectedCharacter) {
+                updateMainCharacter(selectedCharacter);
+              }
+            });
+          });
+        };
+
+        // 初期化処理
+        const init = () => {
+          createCharacterList();
+          // ページ読み込み時に最初のキャラクターを表示
+          if (characters.length > 0) {
+            updateMainCharacter(characters[0]);
+          }
+        };
+
+        init();
+      });
+    </script>
+  </body>
+</html>

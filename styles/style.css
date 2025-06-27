@@ -1,0 +1,17 @@
+/* Google Fontsなどの外部フォントを読み込む場合はここに記述します */
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap'); */
+
+body {
+  /* font-family: 'Noto Sans JP', sans-serif; */
+  background-color: #f8f9fa; /* Tailwindのbg-gray-100より少し明るい色に変更 */
+}
+
+/* 選択リストのアイテムにマウスカーソルを合わせたときにポインターにする */
+.character-item {
+  cursor: pointer;
+}
+
+/* メインキャラクター表示エリアのトランジション */
+#main-character {
+  transition: opacity 0.3s ease-in-out;
+}
