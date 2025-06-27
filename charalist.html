@@ -22,14 +22,25 @@
         font-family: 'M PLUS Rounded 1c', sans-serif;
       }
 
-      /* 選択リストのアイテムにマウスカーソルを合わせたときにポインターにする */
-      .character-item {
-        cursor: pointer;
-      }
-
       /* メインキャラクター表示エリアのトランジション */
       #main-character {
         transition: opacity 0.3s ease-in-out;
+      }
+
+      /* ドロップダウンの矢印の色を調整 */
+      select.character-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+      /* 選択中のグリッドアイテムをハイライト */
+      .character-grid-item.selected img {
+        border-color: #38bdf8; /* sky-400 */
       }
     </style>
   </head>
@@ -81,7 +92,6 @@
               aria-expanded="false"
             >
               <span class="sr-only">メインメニューを開く</span>
-              <!-- ハンバーガーアイコン (閉) -->
               <svg
                 class="block h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +107,6 @@
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
-              <!-- ハンバーガーアイコン (開) -->
               <svg
                 class="hidden h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
@@ -154,12 +163,38 @@
         </p>
       </header>
 
+      <!-- ★修正点: キャラクター選択ナビゲーションを情報の上に移動 -->
+      <nav class="mb-8 md:mb-12">
+        <h3
+          class="text-xl md:text-2xl font-bold text-center mb-6 text-gray-100"
+        >
+          キャラクターを選択
+        </h3>
+
+        <!-- ▼ ドロップダウン (1024px未満で表示) ▼ -->
+        <div class="lg:hidden max-w-md mx-auto">
+          <select
+            id="character-select-dropdown"
+            class="character-select w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+          >
+            <!-- JavaScriptによってoptionがここに生成されます -->
+          </select>
+        </div>
+
+        <!-- ▼ グリッド (1024px以上で表示) ▼ -->
+        <ul
+          id="character-list-grid"
+          class="hidden lg:grid grid-cols-5 gap-4 md:gap-6 justify-center"
+        >
+          <!-- JavaScriptによってキャラクターリストがここに生成されます -->
+        </ul>
+      </nav>
+
       <!-- メインのキャラクター表示エリア -->
       <main
         id="main-character"
-        class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6 md:gap-8 mb-8 md:mb-12 transition-opacity duration-500 ease-in-out"
+        class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6 md:gap-8 transition-opacity duration-500 ease-in-out"
       >
-        <!-- キャラクター画像 -->
         <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0">
           <img
             id="char-image"
@@ -168,7 +203,6 @@
             class="w-full h-full object-cover rounded-full border-4 border-gray-600"
           />
         </div>
-        <!-- キャラクター情報 -->
         <div class="text-center md:text-left">
           <h2
             id="char-name"
@@ -187,45 +221,25 @@
           </p>
         </div>
       </main>
-
-      <!-- キャラクター選択リスト -->
-      <nav>
-        <h3
-          class="text-xl md:text-2xl font-bold text-center mb-6 text-gray-100"
-        >
-          キャラクターを選択
-        </h3>
-        <ul
-          id="character-list"
-          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 justify-center"
-        >
-          <!-- JavaScriptによってキャラクターリストがここに生成されます -->
-        </ul>
-      </nav>
     </div>
 
     <!-- JavaScriptをHTML内に直接埋め込み -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // --- ▼ ハンバーガーメニューの制御 ▼ ---
+        // --- ハンバーガーメニューの制御 ---
         const hamburgerButton = document.getElementById('hamburger-button');
         const mobileMenu = document.getElementById('mobile-menu');
         if (hamburgerButton && mobileMenu) {
           const openIcon = hamburgerButton.querySelector('svg:first-of-type');
           const closeIcon = hamburgerButton.querySelector('svg:last-of-type');
-
           hamburgerButton.addEventListener('click', () => {
-            const isExpanded =
-              hamburgerButton.getAttribute('aria-expanded') === 'true';
-            hamburgerButton.setAttribute('aria-expanded', !isExpanded);
             mobileMenu.classList.toggle('hidden');
             openIcon.classList.toggle('hidden');
             closeIcon.classList.toggle('hidden');
           });
         }
-        // --- ▲ ハンバーガーメニューの制御 ▲ ---
 
-        // キャラクターのデータ配列
+        // --- キャラクターデータと表示ロジック ---
         const characters = [
           {
             id: 1,
@@ -270,73 +284,97 @@
         ];
 
         // DOM要素の取得
-        const mainCharacter = document.getElementById('main-character');
+        const mainCharacterSection = document.getElementById('main-character');
         const charImage = document.getElementById('char-image');
         const charName = document.getElementById('char-name');
         const charCatchphrase = document.getElementById('char-catchphrase');
         const charDescription = document.getElementById('char-description');
-        const characterList = document.getElementById('character-list');
+        const characterSelectDropdown = document.getElementById(
+          'character-select-dropdown'
+        );
+        const characterListGrid = document.getElementById(
+          'character-list-grid'
+        );
 
         // メインのキャラクター表示を更新する関数
         const updateMainCharacter = (character) => {
-          // フェードアウト
-          mainCharacter.style.opacity = 0;
-
+          mainCharacterSection.style.opacity = 0;
           setTimeout(() => {
             charImage.src = character.image;
             charImage.alt = character.name;
             charName.textContent = character.name;
             charCatchphrase.textContent = character.catchphrase;
             charDescription.textContent = character.description;
-            // フェードイン
-            mainCharacter.style.opacity = 1;
-          }, 300); // 0.3秒後に内容を更新してフェードイン
+            mainCharacterSection.style.opacity = 1;
+
+            // ★追加: ナビゲーションの表示を同期させる
+            // ドロップダウンの値を更新
+            characterSelectDropdown.value = character.id;
+            // グリッドの選択状態を更新
+            document
+              .querySelectorAll('.character-grid-item')
+              .forEach((item) => {
+                item.classList.remove('selected');
+                if (item.dataset.characterId == character.id) {
+                  item.classList.add('selected');
+                }
+              });
+          }, 300);
         };
 
-        // キャラクター選択リストを生成する関数
-        const createCharacterList = () => {
+        // ★修正点: ナビゲーション（グリッドとドロップダウン）を生成する関数
+        const createCharacterNavigations = () => {
           characters.forEach((character) => {
-            const li = document.createElement('li');
-            li.className = 'character-item'; // CSSでカーソルをポインターにするため
+            // グリッドリストの生成
+            const gridLi = document.createElement('li');
+            gridLi.className = 'character-grid-item';
+            gridLi.dataset.characterId = character.id;
 
             const button = document.createElement('button');
             button.className =
-              'w-full h-full text-center group transform transition-transform duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg';
-            button.dataset.characterId = character.id;
+              'w-full h-full text-center group transform transition-transform duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg';
 
             const img = document.createElement('img');
             img.src = character.image;
             img.alt = character.name;
             img.className =
-              'w-24 h-24 md:w-32 md:h-32 object-cover rounded-full mx-auto border-4 border-gray-700 shadow-md transition-all duration-300 group-hover:border-sky-500';
+              'w-32 h-32 object-cover rounded-full mx-auto border-4 border-gray-700 shadow-md transition-all duration-300 group-hover:border-sky-500';
 
             const p = document.createElement('p');
-            // ★修正点: 氏名を漢字部分のみに変更
             p.textContent = character.name.split(' (')[0];
             p.className =
               'mt-2 font-bold text-gray-300 group-hover:text-sky-400 text-sm';
 
             button.appendChild(img);
             button.appendChild(p);
-            li.appendChild(button);
-            characterList.appendChild(li);
+            gridLi.appendChild(button);
+            characterListGrid.appendChild(gridLi);
 
-            // クリックイベントの追加
-            button.addEventListener('click', () => {
-              const selectedCharacter = characters.find(
-                (c) => c.id == button.dataset.characterId
-              );
-              if (selectedCharacter) {
-                updateMainCharacter(selectedCharacter);
-              }
-            });
+            button.addEventListener('click', () =>
+              updateMainCharacter(character)
+            );
+
+            // ドロップダウンリストの生成
+            const dropdownOption = document.createElement('option');
+            dropdownOption.value = character.id;
+            dropdownOption.textContent = character.name;
+            characterSelectDropdown.appendChild(dropdownOption);
+          });
+
+          characterSelectDropdown.addEventListener('change', (event) => {
+            const selectedId = event.target.value;
+            const selectedCharacter = characters.find(
+              (c) => c.id == selectedId
+            );
+            if (selectedCharacter) {
+              updateMainCharacter(selectedCharacter);
+            }
           });
         };
 
         // 初期化処理
         const init = () => {
-          createCharacterList();
-          // ページ読み込み時に最初のキャラクターを表示
+          createCharacterNavigations();
           if (characters.length > 0) {
             updateMainCharacter(characters[0]);
           }
