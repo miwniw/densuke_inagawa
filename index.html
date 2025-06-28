@@ -3,20 +3,379 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>小説・猪名川伝助 | リーガルコメディ</title>
+    <title>【公式】とあるリーガルコメディ小説 LP</title>
+    <!-- Tailwind CSSの読み込み -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./styles/style.css" />
+
+    <!-- Google Fontsの読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Serif+JP:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSSをHTML内に直接埋め込み -->
+    <style>
+      body {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+      }
+      .font-serif {
+        font-family: 'Noto Serif JP', serif;
+      }
+      .catchphrase-gradient {
+        background: linear-gradient(to right, #38bdf8, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hero-bg {
+        background-image: url('https://placehold.jp/1600x900.png?text=キャラクター集合画像');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+    </style>
   </head>
-  <body class="bg-gray-100 text-gray-800 font-sans">
-    <div class="container mx-auto p-4 md:p-8">
-      <header class="text-center mb-8 md:mb-12">
-        <h1 class="text-3xl md:text-5xl font-bold text-gray-900">
-          登場人物紹介
+  <body class="bg-gray-900 text-gray-200">
+    <!-- ▼ここからグローバルメニュー▼ -->
+    <nav class="bg-gray-800/80 backdrop-blur-sm fixed top-0 w-full z-50">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex-shrink-0">
+            <a
+              href="./index.html"
+              class="text-white text-xl font-bold hover:text-sky-400 transition-colors"
+              >タイトル</a
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a
+                href="#story"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >物語</a
+              >
+              <a
+                href="#characters"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >登場人物</a
+              >
+              <a
+                href="#overview"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >書籍情報</a
+              >
+              <a
+                href="#author"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >著者</a
+              >
+            </div>
+          </div>
+          <div class="-mr-2 flex md:hidden">
+            <button
+              id="hamburger-button"
+              type="button"
+              class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">メインメニューを開く</span>
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                class="hidden h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a
+            href="#story"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >物語</a
+          >
+          <a
+            href="#characters"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >登場人物</a
+          >
+          <a
+            href="#overview"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >書籍情報</a
+          >
+          <a
+            href="#author"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            >著者</a
+          >
+        </div>
+      </div>
+    </nav>
+    <!-- ▲ここまでグローバルメニュー▲ -->
+
+    <!-- ▼ メインビジュアル ▼ -->
+    <header
+      class="hero-bg relative h-screen flex items-center justify-center text-center text-white"
+    >
+      <div class="absolute inset-0 bg-black/60"></div>
+      <div class="relative z-10 px-4">
+        <h1
+          class="text-4xl md:text-6xl lg:text-7xl font-extrabold font-serif mb-4 leading-tight"
+        >
+          <span class="catchphrase-gradient">法廷</span>で<span
+            class="catchphrase-gradient"
+            >笑い</span
+          >、<span class="catchphrase-gradient">人生</span>で<span
+            class="catchphrase-gradient"
+            >泣け</span
+          >。
         </h1>
-        <p class="text-gray-600 mt-2">
-          <a href="charalist.html">個性豊かなキャラクターたち >>>
+        <p class="text-lg md:text-2xl font-bold max-w-2xl mx-auto">
+          ダメダメ弁護士とワケありの依頼人たちが繰り広げる、<br
+            class="hidden md:block"
+          />予測不能のリーガルコメディ！
         </p>
-      </header>
-    </div>
-    </body>
+        <a
+          href="#story"
+          class="mt-8 inline-block bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105"
+        >
+          今すぐチェック
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- ▼ 物語紹介 ▼ -->
+      <section id="story" class="py-20 md:py-32 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
+          >
+            STORY
+          </h2>
+          <div
+            class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-300 font-serif text-center space-y-6"
+          >
+            <p>
+              主人公は、勝率ほぼゼロの崖っぷち弁護士・猪名川伝助（いながわ
+              でんすけ）。<br />
+              ある日、彼の元に舞い込んできたのは、どう考えても勝ち目のない厄介な依頼ばかり。
+            </p>
+            <p>
+              お人好しのパラリーガル、ナルシストな探偵、義理人情の料理人…<br />
+              個性豊かすぎる仲間たちと共に、伝助は絶体絶命の法廷に挑む！
+            </p>
+            <p>
+              笑いあり、涙あり、そしてまさかのどんでん返しあり。<br />
+              これは、法律の知識がなくても楽しめる、あなたのための物語。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ▼ 登場人物紹介 ▼ -->
+      <section id="characters" class="py-20 md:py-32 bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
+          >
+            CHARACTERS
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <!-- Character 1 -->
+            <div class="flex flex-col items-center">
+              <img
+                src="./imgs/densuke.png"
+                alt="猪名川 伝助"
+                class="w-48 h-48 rounded-full object-cover border-4 border-gray-600 mb-4"
+              />
+              <h3 class="text-xl font-bold text-sky-400">猪名川 伝助</h3>
+              <p class="text-gray-400">愛すべきダメ弁護士</p>
+            </div>
+            <!-- Character 2 -->
+            <div class="flex flex-col items-center">
+              <img
+                src="./imgs/character.jpg"
+                alt="佐々木 真琴"
+                class="w-48 h-48 rounded-full object-cover border-4 border-gray-600 mb-4"
+              />
+              <h3 class="text-xl font-bold text-sky-400">佐々木 真琴</h3>
+              <p class="text-gray-400">心優しきパラリーガル</p>
+            </div>
+            <!-- Character 3 -->
+            <div class="flex flex-col items-center">
+              <img
+                src="./imgs/character.jpg"
+                alt="成瀬 誠"
+                class="w-48 h-48 rounded-full object-cover border-4 border-gray-600 mb-4"
+              />
+              <h3 class="text-xl font-bold text-sky-400">成瀬 誠</h3>
+              <p class="text-gray-400">俺様系ナルシスト探偵</p>
+            </div>
+          </div>
+          <div class="text-center mt-12">
+            <a
+              href="./charalist.html"
+              class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105"
+            >
+              全ての登場人物を見る
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ▼ 書籍情報 ▼ -->
+      <!--
+      <section id="overview" class="py-20 md:py-32 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
+          >
+            OVERVIEW
+          </h2>
+          <div class="max-w-xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8">
+            <div class="flex flex-col md:flex-row gap-8">
+              <div class="md:w-1/3">
+                <img
+                  src="https://placehold.jp/350x500.png?text=書影"
+                  alt="書籍の表紙"
+                  class="rounded-lg shadow-md w-full"
+                />
+              </div>
+              <div
+                class="md:w-2/3 flex flex-col justify-center text-gray-300 space-y-4"
+              >
+                <h3 class="text-2xl font-bold text-white font-serif">
+                  小説タイトル
+                </h3>
+                <p>
+                  <span class="font-bold text-gray-400 w-20 inline-block"
+                    >著者:</span
+                  >
+                  著者名
+                </p>
+                <p>
+                  <span class="font-bold text-gray-400 w-20 inline-block"
+                    >発売日:</span
+                  >
+                  2025年X月X日
+                </p>
+                <p>
+                  <span class="font-bold text-gray-400 w-20 inline-block"
+                    >価格:</span
+                  >
+                  1,800円 (税別)
+                </p>
+                <p>
+                  <span class="font-bold text-gray-400 w-20 inline-block"
+                    >ISBN:</span
+                  >
+                  978-X-XXXXX-XXX-X
+                </p>
+                <div class="mt-6 flex flex-wrap gap-4">
+                  <a
+                    href="#"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-6 rounded-md transition-colors"
+                    >Amazonで購入</a
+                  >
+                  <a
+                    href="#"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-md transition-colors"
+                    >楽天ブックス</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+
+      <!-- ▼ 著者紹介 ▼ -->
+      <section id="author" class="py-20 md:py-32 bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
+          >
+            AUTHOR
+          </h2>
+          <img
+            src="https://placehold.jp/150x150.png?text=著者"
+            alt="著者近影"
+            class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-600"
+          />
+          <h3 class="text-2xl font-bold text-white">著者名</h3>
+          <p class="text-gray-400 mb-6">Author Name</p>
+          <p class="max-w-2xl mx-auto text-gray-300">
+            ここに著者のプロフィールが入ります。経歴や受賞歴、執筆への思いなどを記述します。読者が著者に親近感を抱けるような内容が好ましいです。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ▼ フッター ▼ -->
+    <footer class="bg-gray-900 py-8">
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500"
+      >
+        <p>&copy; 2025 著者名 / 出版社名. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- JavaScriptをHTML内に直接埋め込み -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- ハンバーガーメニューの制御 ---
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (hamburgerButton && mobileMenu) {
+          const openIcon = hamburgerButton.querySelector('svg:first-of-type');
+          const closeIcon = hamburgerButton.querySelector('svg:last-of-type');
+          hamburgerButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+          });
+
+          // メニュー項目クリックでメニューを閉じる
+          mobileMenu.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+              mobileMenu.classList.add('hidden');
+              openIcon.classList.remove('hidden');
+              closeIcon.classList.add('hidden');
+            });
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
